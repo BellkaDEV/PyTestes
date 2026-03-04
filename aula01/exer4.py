@@ -11,12 +11,15 @@ def primo(N):
             return True
         i = i + 1
 
-num = int(input("Insira um numero inteiro natural: "))
+num = 21
 
-if primo(num):
-    print("Numero primo!")
-else:
-    print("Nao primo")
+while True:
+    if primo(num):
+        print(num)
+    if num == 500:
+        break
+    num = num + 1
+
 
             
 
