@@ -21,13 +21,14 @@ while True:
     PB = int(input("População B: "))
     TA = float(input("taxa de crescimento da cidade A: "))
     TB = float(input("taxa de crescimento da cidade B: "))
-    if PA > PB and TA < TB:
+    if PA < PB and TA > TB:
         break
-
-t = 1
-while PA > PB:
-    PA = int(PA*TA)
-    PB = int(PB*TB)
+TA = TA/100
+TB = TB/100
+t = 0
+while PA < PB:
+    PA = int(PA*(1+TA))
+    PB = int(PB*(1+TB))
     t += 1
 
-print(t)
+print(f"ttempo em anos para superar cidade B: {t}")
