@@ -15,20 +15,12 @@ elif A < B:
 
 PT = 0
 if Pven.upper() == ven: 
-    PT = PT + 10
+    PT += 10
 
 if PA == A:
-    PT = PT + 5
-elif PB == B:
-    PT = PT + 5
-elif PA == A and PB == B:
-    PT + 10
-print(PA)
-print(PB)
-print(Pven)
-print("=====")
-print(A)
-print(B)
-print(ven)
+    PT =+ 5
+    
+if PB == B:
+    PT += 5
 
 print(f"Pontos: {PT}")

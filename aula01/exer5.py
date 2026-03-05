@@ -17,15 +17,16 @@ while True:
     else:
         print(f"Impossível! A soma deve estar entre {2*a} e {2*b}. Tente novamente.")
 
-while poss:
-    x = random.randint(a, b)
-    y = random.randint(a, b)
-    if x + y == z:
-        break
+lista = []
+for x in range(a, b, 1):
+    for y in range(a, b, 1):
+        if x+y == z and x != y:
+                lista.append(x, y)
+        
 
 
-print(f"x = {x}")
-print(f"y = {y}")
+
+print(lista)
 print(f"z = x + y = {z}")
 
  
