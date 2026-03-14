@@ -15,12 +15,13 @@ elif A < B:
 
 PT = 0
 if Pven.upper() == ven: 
-    PT += 10
+    PT = PT + 10
 
 if PA == A:
-    PT =+ 5
-    
-if PB == B:
-    PT += 5
+    PT = PT + 5
+elif PB == B:
+    PT = PT + 5
+elif PA == A and PB == B:
+    PT + 10
 
 print(f"Pontos: {PT}")

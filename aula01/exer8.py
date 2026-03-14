@@ -15,7 +15,6 @@ t = (math.log(PB/PA))/(math.log((TA+1)/(TB+1)))
 
 print(round(t, 2))
 """
-
 while True:
     PA = int(input("População A: "))
     PB = int(input("População B: "))
@@ -31,4 +30,4 @@ while PA < PB:
     PB = int(PB*(1+TB))
     t += 1
 
-print(f"ttempo em anos para superar cidade B: {t}")
+print(f"tempo em anos para superar cidade B: {t}")
