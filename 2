@@ -1,0 +1,86 @@
+//Prova 1
+//Nome Completo do Estudante: 
+//Data: 24/04/2025
+
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, Image, StyleSheet, Alert } from 'react-native';
+import { calcCarro, calcOnibus } from './calculos';
+
+export default function App() {
+  // Criando os estados pra guardar os inputs
+  const [distancia, setDistancia] = useState('');
+  const [consumo, setConsumo] = useState('');
+  const [resultado, setResultado] = useState('');
+
+  const handleCalcular = () => {
+    // Validando se os campos estao vazios
+    if (distancia === '' || consumo === '') {
+      Alert.alert("Aviso", "Preencha todos os campos antes de continuar");
+      return;
+    }
+
+    const d = parseFloat(distancia);
+    const c = parseFloat(consumo);
+
+    // Validando se os numeros sao validos
+    if (d <= 0 || c <= 0) {
+      Alert.alert("Erro", "Os valores precisam ser maiores que zero");
+      return;
+    }
+
+    // Fazendo as contas das emissoes
+    const eCarro = calcCarro(d, c);
+    const eOnibus = calcOnibus(d);
+
+    // Logica pra decidir qual transporte recomendar
+    if (eCarro > eOnibus) {
+      const economia = eCarro - eOnibus;
+      setResultado(`O ônibus é mais sustentável! Economia de ${economia.toFixed(2)} kg de CO2.`);
+    } else {
+      setResultado("Neste caso, as emissões são equivalentes ou o carro é viável.");
+    }
+  };
+
+  return (
+    <View style={styles.tela}>
+      {/* Imagem de logo conforme pedido */}
+      <Image 
+        source={{ uri: 'https://flaticon.com' }} 
+        style={styles.logo} 
+      />
+
+      <Text>Distância do Percurso (km):</Text>
+      <TextInput
+        style={styles.caixa}
+        keyboardType="decimal-pad"
+        value={distancia}
+        onChangeText={setDistancia}
+      />
+
+      <Text>Consumo do Carro (km/l):</Text>
+      <TextInput
+        style={styles.caixa}
+        keyboardType="decimal-pad"
+        value={consumo}
+        onChangeText={setConsumo}
+      />
+
+      <Button title="Verificar Impacto" onPress={handleCalcular} />
+
+      {/* Mostra o resultado apenas se houver uma mensagem */}
+      {resultado !== '' && (
+        <View style={styles.boxResultado}>
+          <Text style={styles.txtRes}>{resultado}</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  tela: { flex: 1, padding: 30, justifyContent: 'center', backgroundColor: '#fff' },
+  logo: { width: 80, height: 80, alignSelf: 'center', marginBottom: 25 },
+  caixa: { borderBottomWidth: 1, borderColor: '#000', marginBottom: 20, padding: 5 },
+  boxResultado: { marginTop: 25, padding: 15, backgroundColor: '#f4f4f4' },
+  txtRes: { fontWeight: 'bold', textAlign: 'center' }
+});
