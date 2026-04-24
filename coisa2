@@ -1,0 +1,17 @@
+// src/calculos.ts
+
+// Definimos uma função que recebe dois números e o símbolo da operação
+export function realizarCalculo(n1: number, n2: number, operacao: string): number | string {
+  switch (operacao) {
+    case '+':
+      return n1 + n2;
+    case '-':
+      return n1 - n2;
+    case '*':
+      return n1 * n2;
+    case '/':
+      return n2 !== 0 ? n1 / n2 : "Erro: Divisão por zero";
+    default:
+      return "Operação Inválida";
+  }
+}
