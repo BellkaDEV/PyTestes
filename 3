@@ -1,0 +1,120 @@
+//Prova bruno
+//Nome: Kalleb eCarol Avelar
+//Data: 24/04/2025
+
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, Image, StyleSheet, Alert } from 'react-native';
+
+export default function App() {
+  // Estados para guardar o que o usuario digita
+  const [distancia, setDistancia] = useState('');
+  const [consumo, setConsumo] = useState('');
+  const [resultado, setResultado] = useState('');
+
+  // Funcoes de calculo colocadas aqui dentro para facilitar
+  const calcCarro = (dist: number, cons: number) => (dist / cons) * 0.82;
+  const calcOnibus = (dist: number) => dist * 0.03;
+
+  const handleCalcular = () => {
+    // Validando se os campos estao em branco conforme a prova pede
+    if (distancia === '' || consumo === '') {
+      Alert.alert("Aviso", "preencha todos os campos");
+      return;
+    }
+
+    const d = parseFloat(distancia);
+    const c = parseFloat(consumo);
+
+    // Validando valores invalidos
+    if (isNaN(d) || isNaN(c) || d <= 0 || c <= 0) {
+      Alert.alert("Erro", "Insira valores maiores que zero");
+      return;
+    }
+
+    // Realizando os calculos da regra de negocio
+    const eCarro = calcCarro(d, c);
+    const eOnibus = calcOnibus(d);
+
+    // Logica de decisao e atualizacao do estado da mensagem
+    if (eCarro > eOnibus) {
+      const economia = eCarro - eOnibus;
+      setResultado(`O ônibus é mais sustentável! Economia de ${economia.toFixed(2)} kg de CO2.`);
+    } else {
+      setResultado("Neste caso, as emissões são equivalentes ou o carro é viável.");
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      {/* Logo adequada ao problema ambiental */}
+      <Image 
+        source={{ uri: 'https://flaticon.com' }} 
+        style={styles.logo} 
+      />
+
+      <Text style={styles.label}>Distância (km):</Text>
+      <TextInput
+        style={styles.input}
+        keyboardType="decimal-pad" // Teclado numerico conforme pedido
+        value={distancia}
+        onChangeText={setDistancia}
+      />
+
+      <Text style={styles.label}>Consumo do Carro (km/l):</Text>
+      <TextInput
+        style={styles.input}
+        keyboardType="decimal-pad"
+        value={consumo}
+        onChangeText={setConsumo}
+      />
+
+      <Button title="Verificar Impacto" onPress={handleCalcular} />
+
+      {/* Exibicao do resultado da decisao */}
+      {resultado !== '' && (
+        <View style={styles.resBox}>
+          <Text style={styles.resTxt}>{resultado}</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    marginBottom: 30,
+  },
+  label: {
+    alignSelf: 'flex-start',
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  input: {
+    width: '100%',
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 5,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
+  resBox: {
+    marginTop: 30,
+    padding: 15,
+    backgroundColor: '#eee',
+    borderRadius: 5,
+  },
+  resTxt: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+});
